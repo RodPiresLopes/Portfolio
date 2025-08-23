@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-br" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio | Rodrigo Pires Lopes - Analista de Dados</title>
+
+    <!-- === META TAGS PARA COMPARTILHAMENTO (OPEN GRAPH) === -->
+    <!-- ESSAS TAGS CORRIGEM A IMAGEM QUE APARECE AO COMPARTILHAR O LINK -->
+    <meta property="og:title" content="Portfólio | Rodrigo Pires Lopes - Analista de Dados">
+    <meta property="og:description" content="Portfólio de Análise de Dados com projetos nas áreas de Prevenção a Fraudes, Produtos, Risco e Business Analytics.">
+    <!-- IMPORTANTE: Substitua a URL abaixo por um link direto para a sua foto de perfil. -->
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/211724541?s=96&v=4">
+    <meta property="og:url" content="https://rodpireslopes.github.io/Portfolio/"> <!-- Coloque a URL final do seu portfólio aqui -->
+    <meta property="og:type" content="website">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Estilos customizados para o tema noir */
+        body {
+            background-image: url('https://i.pinimg.com/736x/82/92/67/829267030099aa830b4f6f47baee5147.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            background-color: #111827; /* Fallback color */
+        }
+        
+        /* Overlay escuro para melhorar a legibilidade */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            z-index: -1;
+        }
+
+        /* Estilo para os títulos das seções */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Estilo para os cards com fundo de vidro */
+        .card {
+            background-color: rgba(17, 24, 39, 0.6); /* bg-gray-900 com opacidade */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background-color: rgba(31, 41, 55, 0.7); /* bg-gray-800 com opacidade */
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Estilo para o modal */
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Estilo para o menu de navegação */
+        nav {
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Estilo para o highlight da busca */
+        mark.highlight {
+            background-color: #fde047; /* Amarelo Tailwind */
+            color: #111827; /* Cinza escuro Tailwind */
+            padding: 1px 2px;
+            border-radius: 3px;
+        }
+        
+        mark.highlight-active {
+            background-color: #fbbf24; /* amber-400 */
+            outline: 2px solid #f59e0b; /* amber-500 */
+        }
+
+        /* Estilo para a caixa de autocomplete */
+        #autocomplete-box .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        #autocomplete-box .autocomplete-item:hover {
+            background-color: #374151; /* gray-700 */
+        }
+        
+        /* --- ESTILOS PARA O NOVO CARROSSEL DE RECOMENDAÇÕES --- */
+        .recommendation-carousel-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            cursor: grab;
+        }
+        .recommendation-carousel-container.grabbing { cursor: grabbing; }
+
+        /* Sombras laterais para dar profundidade */
+        .recommendation-carousel-container::before,
+        .recommendation-carousel-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .recommendation-carousel-container::before { left: -1px; background: linear-gradient(to right, #101012 20%, transparent 100%); }
+        .recommendation-carousel-container::after { right: -1px; background: linear-gradient(to left, #101012 20%, transparent 100%); }
+
+        .recommendation-track { 
+            display: flex; 
+            user-select: none; 
+            gap: 1.5rem;
+        }
+        
+        .recommendation-slide {
+            background-color: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            width: 380px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .recommendation-slide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.3); /* Sombra roxa do tema */
+        }
+
+        .recommendation-slide img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4f46e5; /* Roxo do tema */
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .recommendation-slide .name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .recommendation-slide .title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #a7a7a7;
+            margin-bottom: 1.5rem;
+            min-height: 2.7rem; /* Para evitar saltos no layout */
+        }
+
+        .recommendation-slide .text {
+            font-size: 1rem;
+            color: #d1d5db; /* Cinza claro */
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .recommendation-slide .text::before,
+        .recommendation-slide .text::after {
+            font-size: 2.5rem;
+            font-family: 'Cinzel', serif;
+            color: #4f46e5; /* Roxo do tema */
+            position: relative;
+            top: 10px;
+        }
+        .recommendation-slide .text::before { content: '“'; left: -5px; }
+        .recommendation-slide .text::after { content: '”'; right: -5px; }
+
+    </style>
+</head>
+<body class="bg-black text-white">
+    <div class="overlay"></div>
+
+    <!-- SEÇÃO: MENU DE NAVEGAÇÃO COM BUSCA -->
+    <nav class="bg-black bg-opacity-50 p-4 fixed top-0 left-0 right-0 z-40">
+        <div class="container mx-auto flex justify-between items-center flex-wrap gap-4">
+            <!-- Links de Navegação -->
+            <div class="flex justify-center flex-grow space-x-4 md:space-x-8 text-sm md:text-base">
+                <a href="#apresentacao" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">APRESENTAÇÃO</a>
+                <a href="#skills" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">HABILIDADES</a>
+                <a href="#projetos" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">PROJETOS</a>
+                <a href="#laboratorio-dados" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">LABORATÓRIO</a>
+                <a href="#recomendacoes" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">RECOMENDAÇÕES</a>
+                <a href="#" id="empresas-link" class="text-gray-300 hover:text-white transition-colors duration-300">CURRÍCULO</a>
+            </div>
+            <!-- Barra de Busca -->
+            <div class="relative mx-auto md:mx-0">
+                <div class="flex items-center bg-gray-800 border border-gray-600 rounded-md">
+                    <input type="search" id="search-input" placeholder="Buscar..." class="bg-transparent py-1 pl-3 pr-2 text-white text-sm focus:outline-none w-48" autocomplete="off">
+                    <div id="search-nav" class="flex items-center hidden">
+                        <span id="search-counter" class="text-xs text-gray-400 px-2"></span>
+                        <button id="search-up-btn" class="px-1 text-gray-400 hover:text-white" aria-label="Resultado anterior">↑</button>
+                        <button id="search-down-btn" class="px-1 text-gray-400 hover:text-white" aria-label="Próximo resultado">↓</button>
+                    </div>
+                    <button id="search-btn" class="px-2 text-gray-400 hover:text-white" aria-label="Buscar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
+                <div id="autocomplete-box" class="absolute top-full left-0 right-0 bg-gray-800 border border-gray-600 rounded-md mt-1 z-50 hidden max-h-60 overflow-y-auto"></div>
+                <span id="search-message" class="absolute -bottom-5 right-0 text-xs text-red-400"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal do Portfólio -->
+    <div id="main-portfolio">
+        <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+            <!-- SEÇÃO: APRESENTAÇÃO -->
+            <header id="apresentacao" class="text-center pt-48 pb-16 md:pt-48 md:pb-24">
+                <h1 class="text-4xl md:text-6xl font-bold font-serif tracking-wider" style="font-family: 'Playfair Display', serif;">RODRIGO PIRES LOPES</h1>
+                <p class="text-xl md:text-2xl text-gray-300 mt-4">Analista de Dados</p>
+                <div class="mt-6 max-w-3xl mx-auto text-gray-400 text-left space-y-4">
+                    <p>
+                        Profissional com mais de 4 anos de experiência em Análise de Dados e Business Analytics, com forte atuação nas áreas de Prevenção a Fraudes, Produtos, Risco, Cobrança e Performance.
+                    </p>
+                    <p>
+                        Sou um paulistano de 38 anos, apaixonado por animais, viajar e cozinhar. Estou em constante aprendizado e evolução na área de dados e busco, a cada dia, evoluir como ser humano.
+                    </p>
+                </div>
+            </header>
+
+            <main class="space-y-16 md:space-y-24">
+                
+            <!-- SEÇÃO: SKILLS -->
+            <section id="skills">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title pb-2">SKILLS</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    <div class="card p-4 rounded-lg text-center"><h3 class="font-bold text-lg">Python</h3><p class="text-sm text-gray-400">(Pandas, NumPy, Sqlalchemy)</p></div>
+                    <div class="card p-4 rounded-lg text-center"><h3 class="font-bold text-lg">SQL</h3><p class="text-sm text-gray-400">(PostgreSQL, MySQL, Snowflake)</p></div>
+                    <div class="card p-4 rounded-lg text-center"><h3 class="font-bold text-lg">Visualização</h3><p class="text-sm text-gray-400">(Tableau, Power BI, Metabase)</p></div>
+                    <div class="card p-4 rounded-lg text-center"><h3 class="font-bold text-lg">Machine Learning</h3><p class="text-sm text-gray-400">(Scikit-learn)</p></div>
+                    <div class="card p-4 rounded-lg text-center"><h3 class="font-bold text-lg">Estatística</h3><p class="text-sm text-gray-400">Testes A/B</p></div>
+                    <div class="card p-4 rounded-lg text-center"><h3 class="font-bold text-lg">Cloud</h3><p class="text-sm text-gray-400">(AWS, GCP)</p></div>
+                    <div class="card p-4 rounded-lg text-center"><h3 class="font-bold text-lg">Big Data</h3><p class="text-sm text-gray-400">(Spark)</p></div>
+                </div>
+            </section>
+
+                <!-- SEÇÃO: PROJETOS -->
+                <section id="projetos">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title pb-2">PROJETOS</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="card rounded-lg overflow-hidden"><div class="p-6"><h3 class="text-2xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Redução de SLA</h3><p class="text-gray-400 mb-4">Desenvolvimento e implementação de um sistema de busca com base em dados internos proporcionando uma queda significativa no SLA.</p><button data-modal-target="#modal-projeto-1" class="inline-block text-white font-bold border-b-2 border-gray-500 hover:border-white transition-colors">Ver Projeto &rarr;</button></div></div>
+                        <div class="card rounded-lg overflow-hidden"><div class="p-6"><h3 class="text-2xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Reestruturação de onboarding</h3><p class="text-gray-400 mb-4">Estudo para validação, alteração e criação de regras de onboarding e construção de dashboards de performance.</p><button data-modal-target="#modal-projeto-2" class="inline-block text-white font-bold border-b-2 border-gray-500 hover:border-white transition-colors">Ver Projeto &rarr;</button></div></div>
+                        <div class="card rounded-lg overflow-hidden"><div class="p-6"><h3 class="text-2xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Performance & BI</h3><p class="text-gray-400 mb-4">Desenvolvimento e monitoramento dos KPI's de processos consolidados e gestão de novos projetos.</p<button data-modal-target="#modal-projeto-3" class="inline-block text-white font-bold border-b-2 border-gray-500 hover:border-white transition-colors">Ver Projeto &rarr;</button></div></div>
+                        <div class="card rounded-lg overflow-hidden"><div class="p-6"><h3 class="text-2xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Motor de decisão - FPD</h3><p class="text-gray-400 mb-4">Criação de um motor de decisão de fraude aplicado ao FPD .</p><button data-modal-target="#modal-projeto-4" class="inline-block text-white font-bold border-b-2 border-gray-500 hover:border-white transition-colors">Ver Projeto &rarr;</button></div></div>
+                    </div>
+                </section>
+
+                <!-- SEÇÃO: LABORATÓRIO DE DADOS -->
+                <section id="laboratorio-dados">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 section-title pb-2">LABORATÓRIO DE DADOS</h2>
+                    <p class="text-center max-w-3xl mx-auto text-gray-400 mb-12">
+                        Aqui você vai encontrar análises que eu faço para estudo, melhorar meus códigos, testar ferramentas e praticar análise e ciência de dados. São projetos exploratórios e experimentos contínuos no universo dos dados.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="card rounded-lg overflow-hidden p-6"><h3 class="text-xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Modelo de SVM de Classificação</h3><p class="text-gray-400 mb-4 text-sm">Modelo de classificação da possibilidade de um cliente se tornar churn.</p><a href="https://github.com/RodPiresLopes/SVM_Model_Churn.git" target="_blank" rel="noopener noreferrer" class="inline-block text-white font-bold text-sm border-b-2 border-gray-500 hover:border-white transition-colors">Ver no GitHub &rarr;</a></div>
+                        <div class="card rounded-lg overflow-hidden p-6"><h3 class="text-xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Web Scraping com BeautifulSoup</h3><p class="text-gray-400 mb-4 text-sm">Teste de ferramentas nativas do python que podem ser utilizadas para extrair dados de sites.</p><a href="https://github.com/RodPiresLopes/Web-Scraping-com-Python.git" target="_blank" rel="noopener noreferrer" class="inline-block text-white font-bold text-sm border-b-2 border-gray-500 hover:border-white transition-colors">Ver no GitHub &rarr;</a></div>
+                        <div class="card rounded-lg overflow-hidden p-6"><h3 class="text-xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">Formatação do Github</h3><p class="text-gray-400 mb-4 text-sm">Como formatar o github e deixar seu README mais apresentável.</p><a href="https://github.com/RodPiresLopes/RodPiresLopes.git" target="_blank" rel="noopener noreferrer" class="inline-block text-white font-bold text-sm border-b-2 border-gray-500 hover:border-white transition-colors">Ver no GitHub &rarr;</a></div>
+                    </div>
+                </section>
+                
+                <!-- SEÇÃO: RECOMENDAÇÕES -->
+                <section id="recomendacoes">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title pb-2">RECOMENDAÇÕES</h2>
+                    <div class="recommendation-carousel-container" id="recommendations-carousel">
+                        <div class="recommendation-track" id="recommendations-track">
+                            <!-- Recomendação 1 -->
+                            <div class="recommendation-slide">
+                                <img src="https://media.licdn.com/dms/image/v2/D4D03AQHgi_T6-aLTww/profile-displayphoto-shrink_800_800/B4DZdLoXgAHkAc-/0/1749320563036?e=1757548800&v=beta&t=94QnGUlul7xlRiLcUuQuyhC3at3o9IrAyMcnx56k1Zs" alt="Foto de Jonatha Neri Cardoso" onerror="this.onerror=null;this.src='https://placehold.co/100x100/1f2937/ffffff?text=JC';">
+                                <h4 class="name">Jonatha Neri Cardoso</h4>
+                                <p class="title">Especialista em estratégia e Gestor de Prevenção à fraude</p>
+                                <p class="text">Rodrigo desenvolveu e implementou modelos de análise de dados para prevenir fraudes na Jeitto. Suas contribuições na criação de scores, colaboração com outras equipes e análise de dados foram essenciais para reduzir custos e aumentar a segurança e eficiência dos processos. Recomendo esse profissional!</p>
+                            </div>
+                            <!-- Recomendação 2 -->
+                            <div class="recommendation-slide">
+                                <img src="https://media.licdn.com/dms/image/v2/D4D03AQH23H_j_ItSyg/profile-displayphoto-shrink_800_800/B4DZStEkQZG8Ac-/0/1738070444346?e=1757548800&v=beta&t=cuPTFi_3YemMjGre6PuBI009xa691HsyELM8afP44nw" alt="Foto de Silvano Amate" onerror="this.onerror=null;this.src='https://placehold.co/100x100/1f2937/ffffff?text=SA';">
+                                <h4 class="name">Silvano Amate</h4>
+                                <p class="title">Consultor de Processos</p>
+                                <p class="text">Rodrigo é um profissional altamente qualificado, com visão estratégica e foco em resultados. Ele combina conhecimento técnico profundo com liderança colaborativa e domínio de metodologias ágeis. Sua excelente comunicação e disposição para compartilhar conhecimento o tornam um diferencial em qualquer equipe.</p>
+                            </div>
+                            <!-- Recomendação 3 -->
+                            <div class="recommendation-slide">
+                                <img src="https://media.licdn.com/dms/image/v2/D4D03AQFMcd_rWDXKHg/profile-displayphoto-shrink_800_800/B4DZOStKrsHQAc-/0/1733333134836?e=1757548800&v=beta&t=izuYGlppw5mjwlX3AgNNwLHrrfYLfS_5hJCv-Qv8tmA" alt="Foto de Rodnei Fontana Lozano" onerror="this.onerror=null;this.src='https://placehold.co/100x100/1f2937/ffffff?text=RL';">
+                                <h4 class="name">Rodnei Fontana Lozano</h4>
+                                <p class="title">Gerente de Prevenção a Fraudes</p>
+                                <p class="text">Um profissional tecnicamente impecável e comprometido. Com profundo domínio de Python, sua capacidade de automatizar processos e construir modelos preditivos foi fundamental para reduzir riscos e perdas. Sua visão estratégica e proatividade o tornam um profissional completo. Recomendo sem ressalvas.</p>
+                            </div>
+                             <!-- Recomendação 4 -->
+                            <div class="recommendation-slide">
+                                <img src="https://media.licdn.com/dms/image/v2/D4D03AQEvivPDNL8spA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1707158161233?e=1757548800&v=beta&t=VBeBiyq5AJAnkjlwxoXmqYX8WaNPTRaFxf9eXKunaLE" alt="Foto de Gabriel dos Santos Gonçalves" onerror="this.onerror=null;this.src='https://placehold.co/100x100/1f2937/ffffff?text=GG';">
+                                <h4 class="name">Gabriel dos Santos Gonçalves</h4>
+                                <p class="title">Data Engineer</p>
+                                <p class="text">I had the pleasure of working with Rodrigo during his career transition. His eagerness to learn and strong communication skills played a key role in his development. He quickly established himself as an essential data professional—always focused on business context and impact.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Página do Currículo (inicialmente oculta) -->
+    <div id="experience-page" class="hidden">
+        <div class="container mx-auto p-4 md:p-8 max-w-5xl pt-24 md:pt-32">
+            <main class="space-y-16 md:space-y-24">
+                 <!-- SEÇÃO: EXPERIÊNCIAS PROFISSIONAIS -->
+                <section id="experiencias-profissionais">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title pb-2">EXPERIÊNCIAS PROFISSIONAIS</h2>
+                    <div class="space-y-12 max-w-4xl mx-auto">
+                        <div class="card p-6 md:p-8 rounded-lg">
+                            <div class="flex flex-col md:flex-row justify-between md:items-baseline mb-3">
+                                <h3 class="text-2xl font-bold text-white">Analista de Dados de Prevenção à Fraude - Pleno</h3>
+                                <p class="text-md text-gray-400">Agosto 2021 - Maio 2025</p>
+                            </div>
+                            <img src="https://cdn.prod.website-files.com/67bdccef0fb8eda6dcffb16e/67bf25d5e685dfb26716dde0_logo-jeitto.svg" alt="Logo da Jeitto" class="h-10 bg-white p-2 rounded-lg mb-4">
+                            <ul class="list-disc list-inside space-y-2 text-gray-400">
+                                <li>Estudos em Python para validar o desempenho das regras de Onboarding e Transacionais.</li>
+                                <li>Desenvolvimento e implementação de um sistema de busca com base em dados internos no setor de Atendimento, integrando Metabase (SQL) ao Jira, proporcionando uma queda significativa no SLA.</li>
+                                <li>Realização de estudos com Python para validação, alteração e criação de regras de onboarding e transacionais, além da construção e automatização de dashboards de performance no Power BI e Tableau.</li>
+                                <li>Desenvolvimento de alertas comportamentais e transacionais no Grafana.</li>
+                                <li>Desenvolvimento em Python de um motor de decisão de fraude com base nos dados cadastrais, transacionais e comportamentais dos clientes.</li>
+                                <li>Análise financeira detalhada dos bureaux para otimizar processos de onboarding e produtos.</li>
+                                <li>Desenvolvimento e monitoramento de KPIs com Power BI e Tableau para aferir a eficácia dos processos de prevenção a fraudes e cobrança.</li>
+                                <li>Estudos individualizados da performance dos analistas de prevenção à fraude para implementar melhorias em ferramentas e processos.</li>
+                            </ul>
+                        </div>
+        
+                        <div class="card p-6 md:p-8 rounded-lg">
+                            <div class="flex flex-col md:flex-row justify-between md:items-baseline mb-3">
+                                <h3 class="text-2xl font-bold text-white">Docente</h3>
+                                <p class="text-md text-gray-400">Fevereiro 2014 - Agosto 2021</p>
+                            </div>
+                            <img src="https://portalinstitucional-assets.azureedge.net/strapi/assets/Logo_Anhanguera_Horizontal_170x60px_1_d985ea5183_f8eda82648.svg" alt="Logo da Anhanguera" class="h-12 bg-white p-2 rounded-lg mb-4">
+                            <ul class="list-disc list-inside space-y-2 text-gray-400">
+                                <li>Atuação como Docente nos cursos de Administração e Contabilidade para as disciplinas Matemática, Finanças, Contabilidade Básica e outras disciplinas correlacionadas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SEÇÃO: FORMAÇÃO ACADÊMICA -->
+                <section id="formacao-curriculo">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title pb-2">FORMAÇÃO ACADÊMICA</h2>
+                    <div class="space-y-8 max-w-3xl mx-auto">
+                        <div class="card p-6 rounded-lg"><div class="flex justify-between items-baseline"><h3 class="text-xl font-bold">MBA: Data Science e Analytics</h3><p class="text-sm text-gray-400">Out 2024 - Jun 2026</p></div><p class="text-md text-gray-300 mt-1">USP/ESALQ (Cursando)</p></div>
+                        <div class="card p-6 rounded-lg"><div class="flex justify-between items-baseline"><h3 class="text-xl font-bold">Tecnologia em Análise e Desenvolvimento de Sistemas</h3><p class="text-sm text-gray-400">Fev 2020 - Dez 2022</p></div><p class="text-md text-gray-300 mt-1">Universidade Anhanguera - Uniderp (Concluído)</p></div>
+                        <div class="card p-6 rounded-lg"><div class="flex justify-between items-baseline"><h3 class="text-xl font-bold">MBA: Gestão Estratégica de Negócios</h3><p class="text-sm text-gray-400">Fev 2016 - Dez 2017</p></div><p class="text-md text-gray-300 mt-1">Universidade Anhanguera - Uniderp (Concluído)</p></div>
+                    </div>
+                </section>
+            </main>
+            <div class="text-center mt-16">
+                <button id="back-to-main" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-md transition-colors duration-300">
+                    &larr; Voltar ao Portfólio
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SEÇÃO: FOOTER -->
+    <footer class="text-center py-12 mt-16 border-t border-gray-800">
+        <p class="text-gray-400">Entre em contato:</p>
+        <div class="flex justify-center space-x-6 mt-4">
+            <a href="https://wa.me/+5511972776827" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors">WhatsApp</a>
+            <a href="https://www.linkedin.com/in/rodrigo-pires-lopes/" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors">LinkedIn</a>
+            <a href="https://github.com/RodPiresLopes?tab=repositories" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors">GitHub</a>
+        </div>
+    </footer>
+
+    <!-- === MODAIS DOS PROJETOS === -->
+    <div id="modal-projeto-1" class="modal fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 hidden z-50"><div class="card max-w-3xl w-full rounded-lg p-8 relative max-h-screen overflow-y-auto"><button data-modal-close class="absolute top-4 right-6 text-white text-3xl font-bold hover:text-gray-400 transition-colors">&times;</button><h3 class="text-3xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">Redução de SLA</h3><div class="space-y-6 text-gray-400"><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Problema</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>A empresa enfrentava problemas com o SLA devido ao alto volume de chamados. O time de Prevenção a Fraudes dispunha somente de dois analistas para atender os chamados que eram direcionados a área, ocasionado um excedente no SLA em + 100 horas (+320%). Isso gerava insatisfação do cliente e aumentava o Contact Rate.</li></ul></div><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Solução</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>Realizei uma análise completa do fluxo de atendimento e mapiei os principais temas que exigiam uma análise da área de prevenção. Destes, 75% estavam direcionados a bloqueio de conta, bloqueio de transações e recusa no onboarding.</li><li>Utilizando o Metabase (MySql) e integrando o mesmo ao Jira, construí um sistema de tomada de decisão com base nos dados internos do cliente e parâmetros da área de prevenção a fraudes.</li></ul></div><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Resultados</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>A implementação do sistema de busca resultou em uma redução de 40% no número de chamados para área de prevenção a fraudes.</li><li>O SLA foi para menos de 24 horas nos casos que ainda demandavam ação dos analistas de fraude.</li><li>Os chamados com os temas mapeados eram solucionados já no primeiro contato com a o analista de atendimento.</li></ul></div></div></div></div>
+    <div id="modal-projeto-2" class="modal fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 hidden z-50"><div class="card max-w-3xl w-full rounded-lg p-8 relative max-h-screen overflow-y-auto"><button data-modal-close class="absolute top-4 right-6 text-white text-3xl font-bold hover:text-gray-400 transition-colors">&times;</button><h3 class="text-3xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">Aumento na conversão</h3><div class="space-y-6 text-gray-400"><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Problema</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>Algumas regras de onboarding não faziam mais sentido para o momento atual da empresa, do mercado e com o perfil do público-alvo.</li><li>Os dados capturados não eram aproveitados em sua totalidade, os outputs de algumas ferramentas não eram considerados, algumas regras se tornavam desnecessárias devido a novas tecnologias e banco de dados restritivo com excesso de dados sem revisão.</li></ul></div><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Solução</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>Revisão da esteira de onboarding e mapeamento das principais regras restritivas de prevenção a fraudes e seu real impacto na aquisição de novos clientes.</li><li>Estudo com python, extraindo dados do Snowflake e do MongoDB, para análise de múltiplas tentativas de cadastros, cruzamentos de dados de geolocalização, metadados e cruzamento de outputs de ferramentas externas.</li><li>Ainda em python realizei a limpeza na base restritiva conforme novos parâmetros de prevenção a fraudes e de negócios.</li><li>Os dados de contato retirados foram validados através de sistema criado com python para a validação de aplicativos de contato e um validador de e-mail através de verificação de caracteres.</li></ul></div><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Resultados</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>Redução de 38% de regras de prevenção a fraudes, diminuindo a fricção na esteira e mantendo a qualidade e eficiência.</li><li>Retirada de +2M de cpfs da listra restritiva.</li><li>+350k cpf’s com contatos validados e direcionados para as áreas de growth e comunicação atuarem.</li><li>Contribuição de direta do time de prevenção a fraudes com a vertical de aquisição.</li><li>Criei no PowerBi e no Tableau dashboards automatizados para análise da performance das regras de prevenção e seus respectivos grupos.</li></ul></div></div></div></div>
+    <div id="modal-projeto-3" class="modal fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 hidden z-50"><div class="card max-w-3xl w-full rounded-lg p-8 relative max-h-screen overflow-y-auto"><button data-modal-close class="absolute top-4 right-6 text-white text-3xl font-bold hover:text-gray-400 transition-colors">&times;</button><h3 class="text-3xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">Performance & BI</h3><div class="space-y-6 text-gray-400"><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Resultados</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>Análise financeira detalhada dos bureaux que forneceu insights valiosos para a gestão tomar decisões e optar por mudanças estratégicas em processos de onboarding reduzindo CAC e diminuindo a fricção da esteira.</li><li>Estudos individualizados da performance dos analistas de prevenção à fraude, utilizando métricas específicas e indicadores-chave de desempenho. A partir dessas análises, foi possível implementar mudanças nas ferramentas e processos operacionais de prevenção à fraude.</li><li>Estudos sobre a performance e eficácia das ferramentas de comunicação de cobrança, evolução de carteira e desempenho de processos.</li><li>Criação de dashboards interativos e intuitivos para monitoramento do desempenho de biometria do fluxo de onboarding.</li><li>Criação de dashboards interativo para monitorar fluxo e desempenho de novos produtos. A gerência passou a ter acesso instantâneo aos resultados, permitindo decisões mais ágeis.</li></ul></div></div></div></div>
+    <div id="modal-projeto-4" class="modal fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 hidden z-50"><div class="card max-w-3xl w-full rounded-lg p-8 relative max-h-screen overflow-y-auto"><button data-modal-close class="absolute top-4 right-6 text-white text-3xl font-bold hover:text-gray-400 transition-colors">&times;</button><h3 class="text-3xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">Motor de decisão - FPD</h3><div class="space-y-6 text-gray-400"><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Problema</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>O custo com cobrança em perda (+180) estava elevado e a empresa nunca realizou analise de FPD.</li></ul></div><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Solução</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>Desenvolvi, em Python, um motor de decisão de fraude com base nos dados cadastrais, transacionais e comportamentais dos clientes, permitindo identificar padrões suspeitos e comportamentos anômalos.</li><li>Aplicamos este modelo na carteira de cobrança buscando assim perfis de fraude.</li><li>Coleta dos dados dos clientes validados como fraude para utilização do time de onboarding e SI.</li></ul></div><div><h4 class="text-xl font-bold text-white mb-2 border-b border-gray-700 pb-1">Resultados</h4><ul class="list-disc list-inside space-y-2 pl-2"><li>Redução de mais de 1M na carteira de cobrança.</li><li>Aumento de eficiencia de segurança no processo de onboarding.</li><li>Melhoria nos monitoramentos comportamentais e transacionais.</li></ul></div></div></div></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- VARIÁVEIS GLOBAIS ---
+            const mainPortfolio = document.getElementById('main-portfolio');
+            const experiencePage = document.getElementById('experience-page');
+            const empresasLink = document.getElementById('empresas-link');
+            const backToMainBtn = document.getElementById('back-to-main');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const searchMessage = document.getElementById('search-message');
+            const autocompleteBox = document.getElementById('autocomplete-box');
+            const searchNav = document.getElementById('search-nav');
+            const searchCounter = document.getElementById('search-counter');
+            const searchUpBtn = document.getElementById('search-up-btn');
+            const searchDownBtn = document.getElementById('search-down-btn');
+
+            let searchableWords = new Set();
+            let allMatches = [];
+            let currentMatchIndex = -1;
+
+            // --- FUNÇÕES DE NAVEGAÇÃO ---
+            const showExperiencePage = () => { mainPortfolio.classList.add('hidden'); experiencePage.classList.remove('hidden'); window.scrollTo(0, 0); };
+            const showMainPage = () => { experiencePage.classList.add('hidden'); mainPortfolio.classList.remove('hidden'); };
+
+            // --- FUNÇÕES DE MODAL ---
+            const openModal = (modal) => { if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }};
+            const closeModal = (modal) => { if (modal) { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }};
+
+            // --- LÓGICA DE BUSCA E NAVEGAÇÃO ---
+            const buildSearchableWords = () => {
+                const allText = document.body.innerText;
+                const words = allText.match(/[a-zA-Z0-9À-ú]+/g) || [];
+                searchableWords = new Set(words.map(word => word.toLowerCase()));
+            };
+            const removeHighlights = () => {
+                document.querySelectorAll('mark.highlight').forEach(mark => {
+                    const parent = mark.parentNode;
+                    if (parent) {
+                        parent.replaceChild(document.createTextNode(mark.textContent), mark);
+                        parent.normalize();
+                    }
+                });
+                searchMessage.textContent = '';
+                allMatches = [];
+                currentMatchIndex = -1;
+                searchNav.classList.add('hidden');
+            };
+            const highlightAll = (element, searchTerm) => {
+                if (!searchTerm || !element) return [];
+                const lowerCaseTerm = searchTerm.toLowerCase();
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+                const nodesToProcess = [];
+                let node;
+                while (node = walker.nextNode()) {
+                    if(node.parentElement.tagName !== 'SCRIPT' && node.parentElement.tagName !== 'STYLE') {
+                       nodesToProcess.push(node);
+                    }
+                }
+                let matches = [];
+                nodesToProcess.forEach(n => {
+                    const text = n.nodeValue;
+                    if (text.toLowerCase().includes(lowerCaseTerm)) {
+                        const fragment = document.createDocumentFragment();
+                        const regex = new RegExp(`(${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+                        text.split(regex).forEach((part, index) => {
+                            if (index % 2 === 1) {
+                                const mark = document.createElement('mark');
+                                mark.className = 'highlight';
+                                mark.textContent = part;
+                                fragment.appendChild(mark);
+                                matches.push(mark);
+                            } else if (part) {
+                                fragment.appendChild(document.createTextNode(part));
+                            }
+                        });
+                        if (fragment.hasChildNodes()) { n.parentNode.replaceChild(fragment, n); }
+                    }
+                });
+                return matches;
+            };
+            const navigateToMatch = (index) => {
+                if (index < 0 || index >= allMatches.length) return;
+                if (currentMatchIndex !== -1 && allMatches[currentMatchIndex]) {
+                    allMatches[currentMatchIndex].classList.remove('highlight-active');
+                }
+                currentMatchIndex = index;
+                const match = allMatches[currentMatchIndex];
+                match.classList.add('highlight-active');
+                const parentModal = match.closest('.modal');
+                const parentExperiencePage = match.closest('#experience-page');
+                if (parentExperiencePage && experiencePage.classList.contains('hidden')) { showExperiencePage(); }
+                if (parentModal && parentModal.classList.contains('hidden')) { openModal(parentModal); }
+                setTimeout(() => {
+                    match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 150);
+                searchCounter.textContent = `${currentMatchIndex + 1} / ${allMatches.length}`;
+            };
+            const performSearch = () => {
+                removeHighlights();
+                autocompleteBox.classList.add('hidden');
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    const searchAreas = [mainPortfolio, experiencePage, ...document.querySelectorAll('.modal')];
+                    searchAreas.forEach(area => {
+                        allMatches.push(...highlightAll(area, searchTerm));
+                    });
+                    if (allMatches.length > 0) {
+                        searchNav.classList.remove('hidden');
+                        navigateToMatch(0);
+                    } else {
+                        searchMessage.textContent = 'Não encontrado';
+                        setTimeout(() => { searchMessage.textContent = ''; }, 3000);
+                        searchNav.classList.add('hidden');
+                    }
+                }
+            };
+            
+            // --- INICIALIZAÇÃO E EVENT LISTENERS ---
+            empresasLink.addEventListener('click', (e) => { e.preventDefault(); showExperiencePage(); });
+            backToMainBtn.addEventListener('click', (e) => { e.preventDefault(); showMainPage(); });
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => { if (!experiencePage.classList.contains('hidden')) { showMainPage(); }});
+            });
+            document.querySelectorAll('[data-modal-target]').forEach(b => b.addEventListener('click', () => openModal(document.querySelector(b.dataset.modalTarget))));
+            document.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', () => closeModal(b.closest('.modal'))));
+            document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); }));
+
+            // --- LÓGICA DO CARROSSEL DE RECOMENDAÇÕES (NOVO) ---
+            function setupCarousel(carouselSelector, trackSelector) {
+                const carousel = document.querySelector(carouselSelector);
+                const track = document.querySelector(trackSelector);
+
+                if (!track || !carousel) {
+                    console.error('Carousel or track not found for selector:', carouselSelector);
+                    return;
+                }
+                
+                // Clonar slides para o efeito de loop contínuo
+                const slides = Array.from(track.children);
+                slides.forEach(slide => {
+                    const clone = slide.cloneNode(true);
+                    clone.setAttribute('aria-hidden', 'true');
+                    track.appendChild(clone);
+                });
+
+                let animationFrameId;
+                let currentX = 0;
+                let isPointerDown = false;
+                let startX;
+                let initialTranslate;
+                let isPausedByUser = false;
+                
+                function animate() {
+                    if (!isPausedByUser) {
+                        currentX -= 0.4; // Velocidade da animação
+                        if (Math.abs(currentX) >= track.scrollWidth / 2) {
+                            currentX = 0;
+                        }
+                        track.style.transform = `translateX(${currentX}px)`;
+                    }
+                    animationFrameId = requestAnimationFrame(animate);
+                }
+                
+                function handlePointerDown(e) {
+                    isPausedByUser = true; 
+                    isPointerDown = true;
+                    carousel.classList.add('grabbing');
+                    startX = e.touches ? e.touches[0].pageX : e.pageX;
+                    const style = window.getComputedStyle(track);
+                    const matrix = new DOMMatrixReadOnly(style.transform);
+                    initialTranslate = matrix.m41;
+                    currentX = initialTranslate;
+                    cancelAnimationFrame(animationFrameId); // Para a animação durante o arrasto
+                }
+
+                function handlePointerMove(e) {
+                    if (!isPointerDown) return;
+                    e.preventDefault(); // Evita seleção de texto durante o arrasto
+                    const x = e.touches ? e.touches[0].pageX : e.pageX;
+                    const walk = x - startX;
+                    track.style.transform = `translateX(${initialTranslate + walk}px)`;
+                }
+
+                function handlePointerUp() {
+                    if (!isPointerDown) return;
+                    isPointerDown = false;
+                    carousel.classList.remove('grabbing');
+                    const style = window.getComputedStyle(track);
+                    const matrix = new DOMMatrixReadOnly(style.transform);
+                    currentX = matrix.m41;
+                    requestAnimationFrame(animate); // Reinicia a animação
+                }
+
+                carousel.addEventListener('mouseenter', () => { isPausedByUser = true; });
+                carousel.addEventListener('mouseleave', () => { isPausedByUser = false; });
+                
+                carousel.addEventListener('mousedown', handlePointerDown);
+                document.addEventListener('mousemove', handlePointerMove);
+                document.addEventListener('mouseup', handlePointerUp);
+                
+                carousel.addEventListener('touchstart', handlePointerDown, { passive: true });
+                document.addEventListener('touchmove', handlePointerMove, { passive: false });
+                document.addEventListener('touchend', handlePointerUp);
+
+                animate();
+            }
+
+            setupCarousel('#recommendations-carousel', '#recommendations-track');
+
+
+            buildSearchableWords();
+        });
+    </script>
+</body>
+</html>
